@@ -1,7 +1,23 @@
-var http = require('http');
+const express = require('express');
+const app = express();
+var config = require('./config/config');
 
-var server = http.createServer((req, res) => {
 
+app.use(express.json());
+
+// load controllers
+app.use('/', require('./app/router'));
+app.use('/api', require('./app/users/router'));
+
+
+// errors handler
+app.use(require('./app/errors/not-found'));
+
+
+
+app.listen(config.site.port, (error) => {
+    if(error) {
+
+    }
+    console.log('Server listen on 8081');
 });
-
-server.listen()
